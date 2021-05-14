@@ -1,0 +1,1 @@
+GET     /checkVehicle/:vehicleName  controllers.BasicController.getOneVehicle(vehicleName)
