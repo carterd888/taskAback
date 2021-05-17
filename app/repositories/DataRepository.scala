@@ -1,6 +1,7 @@
 package repositories
 import javax.inject.Singleton
 import models.Vehicle
+
 @Singleton
 class DataRepository {
   private val vehicle = Seq(

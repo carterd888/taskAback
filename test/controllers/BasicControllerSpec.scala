@@ -11,8 +11,10 @@ import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
 import play.api.test.{FakeRequest, Injecting}
 import repositories.DataRepository
 import play.api.test.Helpers._
+
 import scala.concurrent.{Await, ExecutionContext, Future}
 import org.mockito.ArgumentMatchers.any
+import play.api.libs.json.{JsObject, Json}
 
 class BasicControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
   lazy val controllerComponents: ControllerComponents = app.injector.instanceOf[ControllerComponents]
@@ -41,5 +43,17 @@ class BasicControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injectin
     }
   }
   "return NotFound" when {
+
+    "unexpected vehicle name submitted" in {
+      when(mockDataRepository.getVehicle(any[String]))
+        .thenReturn(None)
+
+      val result = testController.getOneVehicle("Fail")(FakeRequest())
+      status(result) mustBe(Status.NOT_FOUND)
+
+
+
+
+    }
   }
 }
