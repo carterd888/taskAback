@@ -10,6 +10,5 @@ class DataRepository {
   )
   def getVehicle(vehicleNameFromUrl: String): Option[Vehicle] = vehicle.collectFirst {
     case p if p.name == vehicleNameFromUrl => p
-    case _ => null
   }
 }

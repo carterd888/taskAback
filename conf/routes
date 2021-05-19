@@ -1,1 +1,2 @@
 GET     /checkVehicle/:vehicleName  controllers.BasicController.getOneVehicle(vehicleName)
+POST    /form                       controllers.BasicController.receiveForm()
