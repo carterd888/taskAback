@@ -20,11 +20,13 @@ class BasicControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injectin
   lazy val controllerComponents: ControllerComponents = app.injector.instanceOf[ControllerComponents]
   implicit lazy val executionContext: ExecutionContext = app.injector.instanceOf[ExecutionContext]
   val mockDataRepository: DataRepository = mock[DataRepository]
+
   object testController extends BasicController(
     controllerComponents,
     mockDataRepository,
     executionContext
   )
+
   val dataModel: Vehicle = Vehicle(
     3,
     true,
@@ -34,26 +36,33 @@ class BasicControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injectin
   "BasicController .getOneVehicle" should {
     "return Ok" when {
       "expected vehicle name submitted" in {
-
         when(mockDataRepository.getVehicle(any[String]))
           .thenReturn(Some(dataModel))
         val result = testController.getOneVehicle("BMW")(FakeRequest())
-        status(result) mustBe(Status.OK)
+        status(result) mustBe (Status.OK)
       }
     }
   }
   "return NotFound" when {
-
     "unexpected vehicle name submitted" in {
       when(mockDataRepository.getVehicle(any[String]))
         .thenReturn(None)
 
       val result = testController.getOneVehicle("Fail")(FakeRequest())
-      status(result) mustBe(Status.NOT_FOUND)
+      status(result) mustBe (Status.NOT_FOUND)
+    }
+  }
 
 
-
-
+  "BasicController .receiveForm" should {
+    "return Ok" when {
+      "expected vehicle name received from POST method" in {
+        when(mockDataRepository.getVehicle(any[String]))
+          .thenReturn(Some(dataModel))
+        val result = testController.receiveForm()(FakeRequest())
+        status(result) mustBe (Status.OK)
+        contentAsJson(result) shouldBe Json.toJson(dataModel)
+      }
     }
   }
 }
