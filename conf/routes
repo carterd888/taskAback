@@ -1,2 +1,5 @@
-GET     /checkVehicle/:vehicleName  controllers.BasicController.getOneVehicle(vehicleName)
+#GET     /checkVehicle/:vehicleName  controllers.BasicController.getOneVehicle(vehicleName)
 POST    /form                       controllers.BasicController.receiveForm()
+
+#POST    /addToDB                    controllers.BasicController.create()
+#GET     /getFromDB                  controllers.BasicController.findAll()
