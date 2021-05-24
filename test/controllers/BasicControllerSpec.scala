@@ -64,5 +64,14 @@ class BasicControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injectin
         contentAsJson(result) shouldBe Json.toJson(dataModel)
       }
     }
+    "return NotFound" when {
+      "unexpected vehicle name git stinput" in {
+        when(mockDataRepository.getVehicle(any[String]))
+          .thenReturn(Future(Seq()))
+
+        val result = testController.receiveForm()(FakeRequest())
+        status(result) shouldBe (Status.INTERNAL_SERVER_ERROR)
+      }
+    }
   }
 }
